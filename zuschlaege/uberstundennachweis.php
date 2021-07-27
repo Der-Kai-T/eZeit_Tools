@@ -55,7 +55,7 @@ $jahr = sprintf('%04d', $_POST['year']);
 
 	
 	ini_set('auto_detect_line_endings',TRUE);
-	$file = fopen("export.csv", "r");
+	
 
 	$start_month = $_POST['month'];
 	$month = $_POST['month'];

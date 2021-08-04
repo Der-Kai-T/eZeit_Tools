@@ -126,7 +126,7 @@
 
 <h2>Impressum</h2>
 <p>Kai Thater, Iserbrooker Weg 67, 22589 Hamburg, dev@kai-thater.de</p>
-<p>Fehler und Funktionswüsche bitte in den <a href="https://kai-thater.de/bug" target="_blanck">Bugtracker</a> eintragen. Vielen Dank.</p>
+<p>Fehler und Funktionswüsche bitte in den <a href="https://kai-thater.de/bug" target="_blanck">Bugtracker</a> eintragen oder <a href="https://github.com/Der-Kai-T/eZeit_Tools/issues" target="_blanck"> über GitHub</a> melden. Vielen Dank.</p>
 
 
 <h2>Datenschutz</h2>

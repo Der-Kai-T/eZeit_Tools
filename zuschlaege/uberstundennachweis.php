@@ -381,7 +381,7 @@ $jahr = sprintf('%04d', $_POST['year']);
 	}
 
 
-	file_put_contents($filename, $_POST['csv']);
+	file_put_contents($filename, "");
 
 /*******************************************************************
 							Wandle die Daten

@@ -171,6 +171,11 @@ $jahr = sprintf('%04d', $_POST['year']);
 						//remove everything else that isn't part of the time
 						$end = substr($end, 0, 5);
 					}
+
+					//move one minute back if end is set to midnight (isn't working in eZeit either so shouldn't occur frequently)
+					if($end == "24:00"){
+						$end = "23:59";
+					}
 		
 
 					if($end != ""){

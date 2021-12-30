@@ -15,7 +15,7 @@
 
 <body style="margin:10px; background-color: #CCCCCC" >
 
-<h1>Nachweis für Tarifbeschäftigte</h1>
+<h1>Nachweis für Tarifbeschäftigte V 1.2</h1>
 
 <h2>Dateneingabe</h2>
 <form action="uberstundennachweis.php" method="POST">
@@ -55,6 +55,8 @@
 </div>
 
 <input type="checkbox" name="ueberstunden"> Überstunden mit auswerten (werden dann vom Zeitkonto abgezogen)
+<br>
+<input type="checkbox" name="fza"> Feiertag mit FZA
 <br><br>
 
 <b>Dateneingabe</b><br>
@@ -98,15 +100,15 @@
 
 <p style="color:#CC0000"><b>Dieses Tool wird ohne Gewährleistung zur Verfügung gestellt. Es obliegt dem Nutzer die erzeugten Nachweise zu kontrollieren. Der Autor dieses Tools übernimmt keine Verantwortung für evtl. unvollständig oder falsch erstellte Nachweise.</b></p>
 
+<p> Update in Version 1.2:<br>
+Es wurde die Berechnung der Feiertage für 2021 und 2022 eingefügt, sowie Heiligabend und Silvester. Dabei wurde auch die Berechnung der Nachtarbeit überarbeitet.</p>
+
 <p>Derzeit fehlen werden folgende Felder <b>nicht</b> berechnet / ausgefüllt:
 <ul>
 	<li>Abgeltung durch Freizeit</li>
 	<li>Überstunden aus Rufbereitschaft</li>
 	<li>Überstunden im Dienstplan vorgesehen</li>
 	<li>Teilzeitbeschäftigte Mehrstunden</li>
-	<li>Feiertag ohne FZA</li>
-	<li>Feiertag mit FZA</li>
-	<li>Heilig Abend und Silvester</li>
 	<li>Bereitschaftsstunden</li>
 	<li>Rufbereitschaftsstunden</li>
 	<li>Rufbereitschaftspauschalen</li>
@@ -116,12 +118,6 @@
 </ul>
 </p>
 
-<p> Für folgende Felder ist eine Berechnung geplant:</p>
-<ul>
-	<li>Feiertage</li>
-	<li>Heiligabend und Silvester</li>
-</ul>
-</p>
 
 
 <h2>Impressum</h2>

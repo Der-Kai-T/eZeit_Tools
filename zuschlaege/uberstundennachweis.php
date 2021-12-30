@@ -30,6 +30,15 @@ $personalnummer = $_POST['personalnummer'];
 
 $monat = sprintf('%02d', $_POST['month']);
 $jahr = sprintf('%04d', $_POST['year']);
+
+$holiday_array = array();
+$holiday_array_ts = array();
+array_push($holiday_array, "01.01.2021", "02.04.2021", "05.04.2021", "01.05.2021", "13.05.2021", "24.05.2021", "03.10.2021", "31.10.2021", "25.12.2021", "26.12.2021");
+array_push($holiday_array, "01.01.2022", "15.04.2022", "18.04.2022", "01.05.2022", "26.05.2022", "06.06.2022", "03.10.2022", "31.10.2022", "25.12.2022", "26.12.2022");
+
+foreach ($holiday_array as $holiday){
+	array_push($holiday_array_ts, TimeToUnix($holiday));
+}
 	
 /*******************************************************************
 							Hier geht es dann los
@@ -118,6 +127,7 @@ $jahr = sprintf('%04d', $_POST['year']);
 		$weekday_number = UnixToDayNumber(TimeToUnix($date_full));
 		$weekday = DayNumberToDayName($weekday_number);
 
+		$unix_date = TimeToUnix($date_full);
 
 
 	//	print_r($data);
@@ -142,6 +152,12 @@ $jahr = sprintf('%04d', $_POST['year']);
 					$start= "";
 					$end = "";
 					$anwesend = "";
+
+					$ce_day1 = 0;
+					$ce_day2 = 0;
+					$ny_day1 = 0;
+					$ny_day2 = 0;
+					$holiday_mins = 0;
 
 					if(isset($start_exploded[$i])){
 						$start = $start_exploded[$i];
@@ -208,7 +224,104 @@ $jahr = sprintf('%04d', $_POST['year']);
 
 					
 
+							//is christmas eve
+							if($date == 24 && $month == 12){
+								
 
+								//Weihnachten nach 6 aber vor 14
+
+									$ce_day1_end = 0;
+									$ce_day1_begin = 0;
+								
+
+									if($end_mins > 6*60){
+										if($start_mins < 6*60 && $end_mins > 6*60){
+											$ce_day1_begin = 6*60;
+										}else if($start_mins >= 6*60 && $start_mins < 14*60){
+											$ce_day1_begin = $start_mins;
+											
+										}
+
+									
+										if($end_mins <= 14*60 && $start_mins < 14*60){
+											$ce_day1_end = $end_mins;
+										}else if($start_mins < 14*60 && $end_mins > 14*60){
+											$ce_day1_end = 14*60;
+										}
+
+									}
+
+									$ce_day1 = $ce_day1_end - $ce_day1_begin;
+
+
+									//Weihnachten nach 14 uhr
+										$ce_day2 = 0;
+
+										
+										if($start_mins <= 14*60 && $end_mins < 24*60 && $end_mins > 14*60){
+											$ce_day2 = $end_mins - 14*60;
+										}else if($start_mins > 14*60 && $end_mins < 24*60 && $end_mins > 14*60){
+											$ce_day2 = $end_mins - $start_mins;
+										}
+
+							}else{
+								$ce_day1 = 0;
+								$ce_day2 = 0;
+							}
+
+							//is new years eve
+							if($date == 31 && $month == 12){
+								
+
+								//Weihnachten nach 6 aber vor 14
+
+									$ny_day1_end = 0;
+									$ny_day1_begin = 0;
+								
+
+									if($end_mins > 6*60){
+										if($start_mins < 6*60 && $end_mins > 6*60){
+											$ny_day1_begin = 6*60;
+										}else if($start_mins >= 6*60 && $start_mins < 14*60){
+											$ny_day1_begin = $start_mins;
+											
+										}
+
+									
+										if($end_mins <= 14*60 && $start_mins < 14*60){
+											$ny_day1_end = $end_mins;
+										}else if($start_mins < 14*60 && $end_mins > 14*60){
+											$ny_day1_end = 14*60;
+										}
+
+									}
+
+									$ny_day1 = $ny_day1_end - $ny_day1_begin;
+
+
+									//Weihnachten nach 14 uhr
+										$ny_day2 = 0;
+
+										
+										if($start_mins <= 14*60 && $end_mins < 24*60 && $end_mins > 14*60){
+											$ny_day2 = $end_mins - 14*60;
+										}else if($start_mins > 14*60 && $end_mins < 24*60 && $end_mins > 14*60){
+											$ny_day2 = $end_mins - $start_mins;
+										}
+
+							}else{
+								$ny_day1 = 0;
+								$ny_day2 = 0;
+							}
+
+							//holiday
+
+							if(is_holiday($unix_date)){
+								$holiday_mins = $arbeitszeit_mins;
+							}else{
+								$holiday_mins = 0;
+							}
+							
 
 
 							//sonntagsarbeit
@@ -271,7 +384,7 @@ $jahr = sprintf('%04d', $_POST['year']);
 							if($start_mins <= 21*60 && $end_mins < 24*60 && $end_mins > 21*60){
 								$nachtarbeit_nach21_mins = $end_mins - 21*60;
 							}else if($start_mins > 21*60 && $end_mins < 24*60 && $end_mins > 21*60){
-								$nachtarbeit_nach21_mins = 4*60 - $start_mins;
+								$nachtarbeit_nach21_mins = $end_mins - $start_mins;
 							}
 
 							
@@ -343,6 +456,8 @@ $jahr = sprintf('%04d', $_POST['year']);
 							$entry['sonntag'] = 0;
 						}
 
+
+						
 					//create array to push
 
 					$entry['date_ts'] 			= TimeToUnix($date_full);
@@ -356,6 +471,11 @@ $jahr = sprintf('%04d', $_POST['year']);
 					$entry['nacht2']			= $nachtarbeit_vor4_mins;
 					$entry['samstag']			= $samstagsarbeit_mins;
 					$entry['ueberstunden']		= $ueberstunden_mins;
+					$entry['ce_day1']			= $ce_day1;
+					$entry['ce_day2']			= $ce_day2;
+					$entry['ny_day1']			= $ny_day1;
+					$entry['ny_day2']			= $ny_day2;
+					$entry['holiday']			= $holiday_mins;
 					
 				
 
@@ -371,6 +491,11 @@ $jahr = sprintf('%04d', $_POST['year']);
 						$entry['nacht2']			+= $last_entry['nacht2'];
 						$entry['samstag']			+= $last_entry['samstag'];
 						$entry['ueberstunden']		+= $last_entry['ueberstunden'];
+						$entry['ce_day1']			+= $last_entry['ce_day1'];
+						$entry['ce_day2']			+= $last_entry['ce_day2'];
+						$entry['ny_day1']			+= $last_entry['ny_day1'];
+						$entry['ny_day2']			+= $last_entry['ny_day2'];
+						$entry['holiday']			+= $last_entry['holiday'];
 					}
 					
 					
@@ -378,7 +503,7 @@ $jahr = sprintf('%04d', $_POST['year']);
 					
 
 					$prev_date_export = $date_full;
-				}
+				}//end for
 
 			}
 		// 
@@ -391,8 +516,14 @@ $jahr = sprintf('%04d', $_POST['year']);
 /*******************************************************************
 							Wandle die Daten
 *******************************************************************/	
-	
 
+function is_holiday($ts){
+	global $holiday_array_ts;
+
+	
+	return array_search($ts, $holiday_array_ts);
+	
+}
 
 		
 /*******************************************************************
@@ -529,7 +660,9 @@ foreach($complete_data as $entry){
 		
 	}else{
 		//present sums
-
+		if($this_month > $last_month){
+			$jahr = $jahr - 1;
+		}
 		for($i = 0; $i < count($month_sums)-1; $i++){
 
 			$x = $i * $offset_column + $start_column;
@@ -581,8 +714,7 @@ foreach($complete_data as $entry){
 
 	
 
-	
-	
+
 
 	for($i = 0; $i < 22; $i++){
 		
@@ -617,6 +749,37 @@ foreach($complete_data as $entry){
 					}
 				}
 				break;
+			case 9:
+				if(!isset($_POST['fza'])){
+					$month_sums[9] += $entry['holiday'];
+					$txt = format_time($entry['holiday']);
+				}
+				break;
+			case 10:
+				if(isset($_POST['fza'])){
+					$month_sums[10] += $entry['holiday'];
+					$txt = format_time($entry['holiday']);
+				}
+				break;
+			case 11:
+				$month_sums[11] += $entry['ce_day1'];
+				$txt = format_time($entry['ce_day1']);
+				break;
+			case 12:
+				$month_sums[12] += $entry['ce_day2'];
+				$txt = format_time($entry['ce_day2']);
+				break;
+			
+			case 13:
+				$month_sums[13] += $entry['ny_day1'];
+				$txt = format_time($entry['ny_day1']);
+				break;
+			
+			case 14:
+				$month_sums[14] += $entry['ny_day2'];
+				$txt = format_time($entry['ny_day2']);
+				break;
+						
 			default:
 				$txt = "";
 				break;

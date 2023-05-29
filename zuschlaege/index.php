@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Nachweis für Tarifbeschäftigte</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link href="bootstrap.min.css" rel="stylesheet">
 
 	
 	<link rel="icon" href="favicon.png" type="image/x-icon">
@@ -15,7 +15,7 @@
 
 <body style="margin:10px; background-color: #CCCCCC" >
 
-<h1>Nachweis für Tarifbeschäftigte V 1.2</h1>
+<h1>Nachweis für Tarifbeschäftigte V 1.3</h1>
 
 <h2>Dateneingabe</h2>
 <form action="uberstundennachweis.php" method="POST">
@@ -100,6 +100,9 @@
 
 <p style="color:#CC0000"><b>Dieses Tool wird ohne Gewährleistung zur Verfügung gestellt. Es obliegt dem Nutzer die erzeugten Nachweise zu kontrollieren. Der Autor dieses Tools übernimmt keine Verantwortung für evtl. unvollständig oder falsch erstellte Nachweise.</b></p>
 
+<p> Update in Version 1.3:<br>
+Die Feiertage 2023 bis 2025 sind hinzugefügt.</p>
+
 <p> Update in Version 1.2:<br>
 Es wurde die Berechnung der Feiertage für 2021 und 2022 eingefügt, sowie Heiligabend und Silvester. Dabei wurde auch die Berechnung der Nachtarbeit überarbeitet.</p>
 
@@ -122,14 +125,14 @@ Es wurde die Berechnung der Feiertage für 2021 und 2022 eingefügt, sowie Heili
 
 <h2>Impressum</h2>
 <p>Kai Thater, Iserbrooker Weg 67, 22589 Hamburg, dev@kai-thater.de</p>
-<p>Fehler und Funktionswüsche bitte in den <a href="https://kai-thater.de/bug" target="_blanck">Bugtracker</a> eintragen oder <a href="https://github.com/Der-Kai-T/eZeit_Tools/issues" target="_blanck"> über GitHub</a> melden. Vielen Dank.</p>
+<p>Fehler und Funktionswüsche bitte <a href="https://github.com/Der-Kai-T/eZeit_Tools/issues" target="_blanck"> über GitHub</a> melden. Vielen Dank.</p>
 
 
 <h2>Datenschutz</h2>
 <p>Ich habe versucht, die Anwendung so Datensparsam wie möglich zu schreiben. Da die Erzeugung des PDFs aber Server-Seitig stattfindet, werden die Daten zwangsläufig dort benötigt. Die Datenübermittlung zum und vom Server erfolgt mittels Transportverschlüsselung (https). Die Server stehen in einem Rechenzentrum von Strato in Deutschland.</p>
 <p>Die Stunden-Daten werden während der Übertragung temporär auf dem Server zwischengespeichert. Nach der Umwandlung der eingegebenen CSV-Daten in Daten, die das System verarbeiten kann, wird die übermittelte CSV-Datei mit einer leeren überschrieben. Es wird keine Verbindung zu den Mitarbeiter-Daten hergestellt. Diese Informationen werden auch nicht einzeln gespeichert. Mittels der leeren CSV-Dateien kann nachvollzogen werden, wie häufig das Tool genutz wurde. Der Dateiname der CSV-Dateien besteht aus dem MD5-Hash eines zufälligen, zehn bytes großen Hex-Dump gefolgt von dem aktuellen Unix-Timestamp. Damit soll sichergestellt werden, dass der Name eindeutig genug ist, dass mehr als eine Person das Tool zeitgleich nutzen kann und gleichzeitig kein Rückschluss auf die anfragende Person erzeugt werden kann. </p>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
